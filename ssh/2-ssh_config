@@ -18,6 +18,11 @@
 Include /etc/ssh/ssh_config.d/*.conf
 
 Host *
+Host
+   
+    PreferredAuthentications publickey
+
+
 #   ForwardAgent no
 #   ForwardX11 no
 #   ForwardX11Trusted yes
