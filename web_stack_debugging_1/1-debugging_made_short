@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 # Shebang line (required)
 curl 0:80
+systemctl stop nginx
 systemctl status nginx
