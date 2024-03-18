@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# short version of the first task in the current directory
-ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-sudo service nginx restart
-sudo pkill -o nginx
+sudo rm /etc/nginx/sites-enabled/default
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx stop
