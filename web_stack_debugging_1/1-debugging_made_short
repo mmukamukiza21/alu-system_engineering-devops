@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 # Stop nginx service
-nginx_pid=$(pgrep nginx)
-kill -9 $nginx_pid
+service nginx stop
