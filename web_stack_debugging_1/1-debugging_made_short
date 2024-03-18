@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Shebang line (required)
-curl 0:80
-systemctl stop nginx
-systemctl status nginx
+#Nginx likes port 80
+rm /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
