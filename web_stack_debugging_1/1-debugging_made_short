@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-# Stop nginx service
-service nginx stop
+# Shebang line (required)
+curl 0:80
+systemctl status nginx
