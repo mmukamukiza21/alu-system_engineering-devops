@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-# Run software on another user
+# a Bash script that accepts one argument
 sudo -u "$1" whoami
