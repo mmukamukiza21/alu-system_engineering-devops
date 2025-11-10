@@ -1,19 +1,54 @@
 #!/usr/bin/env bash
-# Installing Nginx on Ubuntu
-# Nginx is listening on port 80
-# The GET request should return a page containing "Holberton School"
+# Installs and configures nginx web server to serve Holberton School
 
-# Update and install nginx
-sudo apt-get update
-sudo apt-get install nginx -y
+# Install nginx
+apt-get update
+apt-get install -y nginx
 
-# Create directory and HTML file
-sudo mkdir -p /var/www/html
-echo "Holberton School" | sudo tee /var/www/html/index.html > /dev/null
+# Stop all nginx processes
+pkill -9 nginx 2>/dev/null
+sleep 1
 
-# Start and enable nginx
-sudo service nginx start
+# Create the HTML content in the DEFAULT nginx location
+mkdir -p /usr/share/nginx/html
+echo "Holberton School" > /usr/share/nginx/html/index.html
 
-# Test the setup
-echo "Testing Holberton School webpage:"
+# Also create in /var/www/html for good measure
+mkdir -p /var/www/html
+echo "Holberton School" > /var/www/html/index.html
+
+# Fix nginx configuration to use correct root
+cat > /etc/nginx/sites-available/default << 'NGINXCONF'
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    
+    # Try both common locations
+    root /usr/share/nginx/html;
+    
+    index index.html index.htm;
+    server_name _;
+    
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}
+NGINXCONF
+
+# Test configuration
+nginx -t
+
+# Start nginx
+nginx
+
+# Wait and test
+sleep 3
+echo "Testing HTTP response:"
+curl -s -I http://localhost/ | head -1
+
+echo -e "\nTesting content:"
 curl -s http://localhost/
+
+# Additional verification
+echo -e "\nFile being served from:"
+grep "root" /etc/nginx/sites-available/default
